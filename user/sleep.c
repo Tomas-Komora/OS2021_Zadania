@@ -5,12 +5,12 @@
 int
 main(int argc, char *argv[])
 {
-  //ak argc sa nerovna 2 vyhodi chybu inak ide program dalej
+  //if argc is not equal 2 write error or program continue
   if(argc != 2) {
     fprintf(2, "usage: sleep <ticks\n");
     exit(-1);
   }
-  //ymeni pocet na int
+  //change to int
   int ticks = atoi(argv[1]);
   sleep(ticks);
 

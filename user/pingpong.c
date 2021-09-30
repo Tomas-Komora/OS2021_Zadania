@@ -14,14 +14,14 @@ main(int argc, char argv[])
   pipe(to_child);
 
   int pid = fork();
-  //ked pid sa rovna 0 bude proces dietata
+  //if pid = 0 start child proces
   if(pid == 0){
     char received;
     read(to_child[0], &received, 1);
     printf("%d: received ping\n", getpid());
     write(to_parent[1], "x", 1);
   } else {
-    //inak ide do procesa rodica
+    //else start parent proces
     write(to_child[1], "b", 1);
     char received;
     read(to_parent[0], &received, 1);
