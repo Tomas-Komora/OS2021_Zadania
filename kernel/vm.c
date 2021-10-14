@@ -431,4 +431,36 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
   } else {
     return -1;
   }
+} 
+  // call rekursive function.
+void
+vmprint_rekursive(pagetable_t pagetable, int lvl)
+{
+  // there are 2^9 = 512 PTEs in a page table.
+  for(int i = 0; i < 512; i++){
+    pte_t pte = pagetable[i];
+    // chcek validation.
+    if(pte & PTE_V){
+    uint64 child = PTE2PA(pte);
+    if(lvl == 0)
+      printf("..");
+    else if(lvl == 1)
+      printf(".. ..");
+    else if(lvl == 2)
+      printf(".. .. ..");
+    printf("%d: pte %p pa %p\n",i,pte,child);
+    // returning statemant.
+    if((pte & PTE_V) && (pte & (PTE_R|PTE_W|PTE_X)) == 0)
+      vmprint_rekursive((pagetable_t)child,lvl+1);
+    }
+  }
 }
+//print pagetable
+void
+vmprint(pagetable_t pagetable)
+{
+  printf("page table %p\n",pagetable);
+  int lvl = 0;
+  vmprint_rekursive(pagetable, lvl);
+}
+
