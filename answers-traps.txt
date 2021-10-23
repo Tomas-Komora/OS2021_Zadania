@@ -1,0 +1,13 @@
+1. Registre obsahujuce argumentz funkcii su a0 az a7
+   Cislo 13 je ulozene v registry a2
+   
+2. Funkcie f() a g() nie su volane.
+
+3. Printf() sa nachadza na adrese 0x628.
+
+4. Hodnota v registry ra po jalr je 30.
+
+5. Vystup je He110 World$
+   V RISC-V big endian by musela byt premenna i 726c6400 a hodnotu 57616 by sme nemuseli menit.
+   
+6. y= hodnote registra a2, deje sa to preto ze hodnoty sa urcuju podla hodnoty v registry.
