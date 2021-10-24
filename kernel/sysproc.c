@@ -121,6 +121,6 @@ sys_sigreturn(void)
 {
   *myproc()->trapframe = myproc()->alarm_trapframe;
   myproc()->alarm_in_progress = 0;
-  return 0;
+  return myproc()->trapframe->a0;
 }
  
