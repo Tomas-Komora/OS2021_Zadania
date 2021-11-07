@@ -303,7 +303,6 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
   pte_t *pte;
   uint64 pa, i;
   uint flags;
-  char *mem;
 
   for(i = 0; i < sz; i += PGSIZE){
     if((pte = walk(old, i, 0)) == 0)
@@ -311,13 +310,23 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
     if((*pte & PTE_V) == 0)
       panic("uvmcopy: page not present");
     pa = PTE2PA(*pte);
+    //reset PTE_W
+    if(*pte & PTE_W){
+        *pte &= ~PTE_W;
+        *pte |= PTE_COW;
+    }
     flags = PTE_FLAGS(*pte);
-    if((mem = kalloc()) == 0)
+    /*if((mem = kalloc()) == 0)
       goto err;
-    memmove(mem, (char*)pa, PGSIZE);
-    if(mappages(new, i, PGSIZE, (uint64)mem, flags) != 0){
-      kfree(mem);
+    memmove(mem, (char*)pa, PGSIZE);*/
+    pa = PTE2PA(*pte);
+    flags = PTE_FLAGS(*pte);
+
+    if(mappages(new, i, PGSIZE, pa, flags) != 0){
+      //kfree(mem);
       goto err;
+    } else {
+        inc_ref((void*)pa);
     }
   }
   return 0;
@@ -325,6 +334,43 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
  err:
   uvmunmap(new, 0, i / PGSIZE, 1);
   return -1;
+}
+
+int
+umvcow(pagetable_t pagetable, uint64 addr){
+    pte_t *pte;
+    uint64 pa;
+    uint64 flags;
+    char *mem = 0;
+    if(addr >= MAXVA)
+        return -1;
+
+    if((pte = walk(pagetable, addr, 0)) == 0)
+        return -1;
+    if(pte == 0)
+        panic("umvcow: pte should exist");
+    if((*pte & PTE_V) == 0)
+        panic("uvmcow: page not present");
+    if((*pte & PTE_COW) == 0)
+        panic("uvmcow: PTE_COW not set for address");
+    pa = PTE2PA(*pte);
+    flags = PTE_FLAGS(*pte);
+    flags ^= PTE_COW;
+    flags |= PTE_W;
+
+    if((mem = kalloc()) == 0){
+        printf("uvmcow: kalloc failed\n");
+        return -3;
+    }
+    memmove(mem, (char*)pa, PGSIZE);
+    uvmunmap(pagetable, PGROUNDDOWN(addr), 1, 1);
+    if(mappages(pagetable, PGROUNDDOWN(addr), PGSIZE, (uint64)mem, flags) != 0){
+        printf("uvmcow: mappages\n");
+        kfree(mem);
+        return -4;
+    }
+
+    return 0;
 }
 
 // mark a PTE invalid for user access.
@@ -347,9 +393,20 @@ int
 copyout(pagetable_t pagetable, uint64 dstva, char *src, uint64 len)
 {
   uint64 n, va0, pa0;
+  pte_t *pte;
+  if(dstva > MAXVA)
+      return -1;
 
   while(len > 0){
     va0 = PGROUNDDOWN(dstva);
+
+    pte = walk(pagetable, va0, 0);
+    if(pte == 0)
+        return -1;
+    if(*pte & PTE_COW)
+        if(umvcow(pagetable, va0) < 0)
+            panic("copyout: uncow call failed");
+
     pa0 = walkaddr(pagetable, va0);
     if(pa0 == 0)
       return -1;

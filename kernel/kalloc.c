@@ -21,13 +21,24 @@ struct run {
 struct {
   struct spinlock lock;
   struct run *freelist;
+  uint64 *cntref; // number of references
 } kmem;
 
 void
 kinit()
 {
-  initlock(&kmem.lock, "kmem");
-  freerange(end, (void*)PHYSTOP);
+    int frames = 0;
+    uint64 addr = PGROUNDUP((uint64)end);
+
+    kmem.cntref = (uint64*)addr;
+    while(addr < PHYSTOP){
+        kmem.cntref[PA2IND(addr)] = 1;
+        addr += PGSIZE;
+        frames++;
+    }
+
+    initlock(&kmem.lock, "kmem");
+    freerange(kmem.cntref+frames, (void*)PHYSTOP);
 }
 
 void
@@ -51,6 +62,10 @@ kfree(void *pa)
   if(((uint64)pa % PGSIZE) != 0 || (char*)pa < end || (uint64)pa >= PHYSTOP)
     panic("kfree");
 
+  // If ref count is not zero, silently continue.
+  if(dec_ref(pa) != 0)
+      return;
+
   // Fill with junk to catch dangling refs.
   memset(pa, 1, PGSIZE);
 
@@ -72,11 +87,48 @@ kalloc(void)
 
   acquire(&kmem.lock);
   r = kmem.freelist;
-  if(r)
-    kmem.freelist = r->next;
+  if(r) {
+      kmem.freelist = r->next;
+      inc_ref_internal(r);
+  }
   release(&kmem.lock);
 
   if(r)
     memset((char*)r, 5, PGSIZE); // fill with junk
   return (void*)r;
 }
+
+// function of decrement
+uint64
+dec_ref(void *pa)
+{
+    uint64 ret;
+
+
+    acquire(&kmem.lock);
+    if(kmem.cntref[PA2IND(pa)] == 0)
+        panic("dec_ref: cntref zero");
+    kmem.cntref[PA2IND(pa)]--;
+    ret = kmem.cntref[PA2IND(pa)];
+    release(&kmem.lock);
+
+    return ret;
+}
+// function of incrementation
+void
+inc_ref(void *pa)
+{
+    acquire(&kmem.lock);
+    if(kmem.cntref[PA2IND(pa)]  == -1)
+        panic("inc_ref: maximal value of uint64");
+
+    kmem.cntref[PA2IND(pa)]++;
+    release(&kmem.lock);
+}
+// function of counter od references
+void
+inc_ref_internal(void *pa)
+{
+    kmem.cntref[PA2IND(pa)]++;
+}
+

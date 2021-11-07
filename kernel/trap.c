@@ -50,21 +50,24 @@ usertrap(void)
   // save user program counter.
   p->trapframe->epc = r_sepc();
   
-  if(r_scause() == 8){
-    // system call
+  if(r_scause() == 8) {
+      // system call
 
-    if(p->killed)
-      exit(-1);
+      if (p->killed)
+          exit(-1);
 
-    // sepc points to the ecall instruction,
-    // but we want to return to the next instruction.
-    p->trapframe->epc += 4;
+      // sepc points to the ecall instruction,
+      // but we want to return to the next instruction.
+      p->trapframe->epc += 4;
 
-    // an interrupt will change sstatus &c registers,
-    // so don't enable until done with those registers.
-    intr_on();
+      // an interrupt will change sstatus &c registers,
+      // so don't enable until done with those registers.
+      intr_on();
 
-    syscall();
+      syscall();
+  } else if(r_scause() == 15){
+      if(umvcow(p->pagetable, r_stval()) != 0)
+          p->killed = 1;
   } else if((which_dev = devintr()) != 0){
     // ok
   } else {
