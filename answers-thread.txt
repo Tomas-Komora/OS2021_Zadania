@@ -1,0 +1,1 @@
+ked dve vlakna volaju insert sučasne s rovnakým argumentom bude jeden z nich prepísaný tým druhým
