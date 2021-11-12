@@ -43,7 +43,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c611be06-82e3-40c8-8870-b85bb1bba059" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notxv6/ph.c" beforeDir="false" afterPath="$PROJECT_DIR$/notxv6/ph.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notxv6/barrier.c" beforeDir="false" afterPath="$PROJECT_DIR$/notxv6/barrier.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,13 +103,6 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -128,7 +121,7 @@
       <workItem from="1636650569667" duration="974000" />
       <workItem from="1636651550773" duration="47000" />
       <workItem from="1636651601305" duration="1726000" />
-      <workItem from="1636653619760" duration="5275000" />
+      <workItem from="1636653619760" duration="8949000" />
     </task>
     <servers />
   </component>
