@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:OS2021" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:OS2021" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c611be06-82e3-40c8-8870-b85bb1bba059" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/kernel/bio.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/bio.c" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="clangTidyViaClangd" value="false" />
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="208KvQPwa0gF6YejS3WR0jQHVr6" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c611be06-82e3-40c8-8870-b85bb1bba059" name="Default Changelist" comment="" />
+      <created>1635421007070</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1635421007070</updated>
+      <workItem from="1635421009612" duration="395000" />
+      <workItem from="1636034195935" duration="14252000" />
+      <workItem from="1636318312800" duration="168000" />
+      <workItem from="1636318484346" duration="203000" />
+      <workItem from="1636318697081" duration="6000" />
+      <workItem from="1636318739088" duration="34000" />
+      <workItem from="1636491710446" duration="124000" />
+      <workItem from="1636650569667" duration="974000" />
+      <workItem from="1636651550773" duration="47000" />
+      <workItem from="1636651601305" duration="1726000" />
+      <workItem from="1636653619760" duration="8949000" />
+      <workItem from="1636753184887" duration="477000" />
+      <workItem from="1637871201485" duration="17012000" />
+      <workItem from="1637947746973" duration="1648000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="445" y="236" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1636651238905">
+      <screen x="0" y="25" width="1440" height="810" />
+    </state>
+    <state x="445" y="236" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1440.810/-1440.25.1440.875@0.25.1440.810" timestamp="1636651238905" />
+    <state width="600" height="317" key="javadoc.popup" timestamp="1637923267072">
+      <screen x="0" y="25" width="1440" height="810" />
+    </state>
+    <state width="600" height="317" key="javadoc.popup/0.25.1440.810/-1440.25.1440.875@0.25.1440.810" timestamp="1637923267072" />
+    <state x="303" y="339" width="833" height="198" key="makefile.clean.confirm.dialog" timestamp="1636034200866">
+      <screen x="0" y="25" width="1440" height="813" />
+    </state>
+    <state x="303" y="339" key="makefile.clean.confirm.dialog/0.25.1440.813/-1440.25.1440.875@0.25.1440.813" timestamp="1636034200866" />
+    <state x="303" y="340" width="833" height="198" key="makefile.clean.confirm.dialog/0.25.1440.815/-1440.25.1440.875@0.25.1440.815" timestamp="1635421025399" />
+  </component>
+</project>
