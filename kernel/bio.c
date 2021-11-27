@@ -88,11 +88,7 @@ bget(uint dev, uint blockno) {
     }
 
     // Recycle the least recently used (LRU) unused buffer.
-    int i = bucket;
-    while(1){
-      i = (i + 1) % NBUCKET;
-      if(i == bucket)
-          continue;
+    for (int i = (bucket + 1) % NBUCKET; i != bucket; i = (i + 1) % NBUCKET){
 
       acquire(&bcache.lock[i]);
       //not cached, start recycle unused buffer
@@ -109,8 +105,10 @@ bget(uint dev, uint blockno) {
           release(&bcache.lock[i]);
           b->prev = &bcache.head[bucket];
           b->next = bcache.head[bucket].next;
-          b->next->prev = b;
-          b->prev->next = b;
+          //b->next->prev = b;
+          //b->prev->next = b;
+          bcache.head[bucket].next->prev = b;
+          bcache.head[bucket].next = b;
           release(&bcache.lock[bucket]);
           acquiresleep(&b->lock);
           return b;
