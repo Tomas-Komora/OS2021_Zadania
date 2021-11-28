@@ -23,7 +23,7 @@
 #include "fs.h"
 #include "buf.h"
 
-#define NBUCKET 12
+#define NBUCKET 13
 
 
 struct {
