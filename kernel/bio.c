@@ -144,7 +144,7 @@ bpin(struct buf *b) {
 }
 
 void
-bunpin(struct buf *b) {
+bunpin(struct buf *b){
   acquire(&bcache.lock);
   b->refcnt--;
   release(&bcache.lock);
