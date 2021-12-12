@@ -548,13 +548,15 @@ sys_munmap(void)
             vma->f->ref--; // Decrement number of offset
             vma->f = 0;
         }
-        if (walkaddr(myproc()->pagetable, vma->address)) {
-            if (vma->flags & MAP_SHARED) {
-                filewrite(vma->f, addr, length);
-            }
-            // Unmap address form pagetable
-            uvmunmap(myproc()->pagetable,vma->address,1,1);
+        if (walkaddr(myproc()->pagetable, vma->address) == 0)
+        {
+            continue;
         }
+        if (vma->flags & MAP_SHARED) {
+            filewrite(vma->f, addr, length);
+        }
+        // Unmap address form pagetable
+        uvmunmap(myproc()->pagetable,vma->address,1,1);
     vma->address += i;
     vma->length -= i;
     }

@@ -369,31 +369,29 @@ exit(int status)
   }
 
   for(int j = 0; j < VMA_NUM; j++) {
-        uint64 addr = p->vma[j].address;
-        int length = p->vma[j].length;
+    uint64 addr = p->vma[j].address;
+    int length = p->vma[j].length;
 
-        struct vma *vma = &p->vma[j];
+    struct vma *vma = &p->vma[j];
 
-        for(int i = 0; i < length; i += PGSIZE){
-            // find address
-            if (walkaddr(p->pagetable, addr + i) == 0)
-                continue;
-
-            if ((vma->flags & MAP_SHARED) ) {
-                // find correct offset
-                int off = PGROUNDDOWN(addr + i) - vma->address + vma->offset;
-                begin_op();
-                ilock(vma->f->ip );
-                writei(vma->f->ip, 1, PGROUNDDOWN(addr + i) , off, PGSIZE);
-                iunlock(vma->f->ip);
-                end_op();
-            }
-            //unmap address
-            uvmunmap(p->pagetable, PGROUNDDOWN(addr + i), 1, 1);
-        }
-        vma->address += length;
-        vma->offset += length;
-        vma->length -= length;
+    for(int i = 0; i < length; i += PGSIZE){
+      if(length == 0){
+        vma->f->ref--; // Decrement number of offset
+        vma->f = 0;
+      }
+      // Find address
+      if (walkaddr(p->pagetable, addr + i) == 0)
+        continue;
+      if ((vma->flags & MAP_SHARED) ) {
+        // Write to file
+        filewrite(vma->f, addr, length);
+      }
+      // Unmap address
+      uvmunmap(p->pagetable, PGROUNDDOWN(addr + i), 1, 1);
+    }
+    vma->address += length;
+    vma->offset += length;
+    vma->length -= length;
   }
 
 
