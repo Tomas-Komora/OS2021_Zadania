@@ -5,6 +5,11 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "defs.h"
+#include "fs.h"
+#include "sleeplock.h"
+#include "file.h"
+#include "fcntl.h"
+
 
 struct cpu cpus[NCPU];
 
@@ -313,6 +318,16 @@ fork(void)
 
   acquire(&np->lock);
   np->state = RUNNABLE;
+
+
+  for(int i = 0; i < VMA_NUM; i++){
+    if(p->vma[i].f != 0){
+      // copy vma
+      memmove(&np->vma[i], &p->vma[i], sizeof(struct vma));
+      filedup(np->vma[i].f);
+    }
+  }
+
   release(&np->lock);
 
   return pid;
@@ -352,6 +367,35 @@ exit(int status)
       p->ofile[fd] = 0;
     }
   }
+
+  for(int j = 0; j < VMA_NUM; j++) {
+        uint64 addr = p->vma[j].address;
+        int length = p->vma[j].length;
+
+        struct vma *vma = &p->vma[j];
+
+        for(int i = 0; i < length; i += PGSIZE){
+            // find address
+            if (walkaddr(p->pagetable, addr + i) == 0)
+                continue;
+
+            if ((vma->flags & MAP_SHARED) ) {
+                // find correct offset
+                int off = PGROUNDDOWN(addr + i) - vma->address + vma->offset;
+                begin_op();
+                ilock(vma->f->ip );
+                writei(vma->f->ip, 1, PGROUNDDOWN(addr + i) , off, PGSIZE);
+                iunlock(vma->f->ip);
+                end_op();
+            }
+            //unmap address
+            uvmunmap(p->pagetable, PGROUNDDOWN(addr + i), 1, 1);
+        }
+        vma->address += length;
+        vma->offset += length;
+        vma->length -= length;
+  }
+
 
   begin_op();
   iput(p->cwd);

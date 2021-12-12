@@ -29,6 +29,7 @@ int             exec(char*, char**);
 struct file*    filealloc(void);
 void            fileclose(struct file*);
 struct file*    filedup(struct file*);
+struct file*    fileddown(struct file*);
 void            fileinit(void);
 int             fileread(struct file*, uint64, int n);
 int             filestat(struct file*, uint64 addr);
@@ -170,6 +171,9 @@ uint64          walkaddr(pagetable_t, uint64);
 int             copyout(pagetable_t, uint64, char *, uint64);
 int             copyin(pagetable_t, char *, uint64, uint64);
 int             copyinstr(pagetable_t, char *, uint64, uint64);
+struct vma*     find_empty_vma(struct proc *p);
+uint64          alloc_mmap(struct proc *p);
+struct vma*     search_vma(struct proc *p, uint64 addr);
 
 // plic.c
 void            plicinit(void);
